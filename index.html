@@ -1,348 +1,330 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Heartline — Foundation</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Heartline</title>
 <style>
-:root{ --pink:#ff6aa2; --pink2:#ff8bb6; --me:#4f46e5; --ink:#0f172a; --muted:#6b7280; }
-html,body{height:100%;margin:0;background:#0b0e14}
-#root{height:100%;display:grid;place-items:center;padding:12px}
-.phone{
-  width:min(430px,100%); height:calc(100vh - 24px); position:relative; overflow:hidden;
-  background:linear-gradient(180deg,#ffe6ef,#f7f2ff 60%,#f1f5ff);
-  border-radius:28px; box-shadow:0 10px 40px rgba(0,0,0,.55);
-  font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-}
-.status{position:absolute;inset:0 0 auto 0;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;letter-spacing:.3px}
-.status::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0f172a,#111827 70%,#0f172a)}
-.status span{position:relative;z-index:1;font-size:14px;opacity:.9}
-.screen{position:absolute;inset:44px 0 0 0;overflow:auto}
+  :root{
+    --bg:#0d1420;
+    --panel:#101826;
+    --glass: rgba(255,255,255,.9);
+    --card: #ffffff;
+    --ink:#101214;
+    --ink-2:#475569;
+    --primary:#ff7aa2;
+    --primary-2:#ff96b6;
+    --radius:20px;
+    --shadow: 0 10px 30px rgba(0,0,0,.15);
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", Arial, "Apple Color Emoji", "Segoe UI Emoji";}
+  /* rama telefonu */
+  .phone{max-width:420px;margin:0 auto;background:#f6f7fb;border-radius:36px;padding:0;min-height:100dvh;box-sizing:border-box;position:relative;overflow:hidden}
+  .status{height:54px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:.02em;position:sticky;top:0;z-index:5}
+  .screen{min-height:calc(100dvh - 54px);background:#f7f3f6;}
+  .wrap{max-width:560px;margin:0 auto;padding:18px}
 
-/* START */
-.start{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:18px}
-.logo{font-family:Georgia,serif;color:#fff;text-shadow:0 10px 30px rgba(0,0,0,.35);font-size:48px}
-.hero{width:92%;aspect-ratio:3/4;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 14px 40px rgba(255,105,180,.28);background:#ffdbe9 center/cover no-repeat}
-.hero.has-img{background-image:url('assets/start-cover.jpg')}
-.row{display:flex;gap:10px}
-.btn{border:0;border-radius:18px;padding:14px 22px;font-weight:900;color:#fff;background:linear-gradient(90deg,var(--pink),var(--pink2));box-shadow:0 8px 24px rgba(255,105,180,.35);cursor:pointer}
-.btn.secondary{background:rgba(15,23,42,.8);box-shadow:none}
+  /* Start */
+  .start-card{margin:16px;border-radius:28px;overflow:hidden;box-shadow:var(--shadow);background:#fff;position:relative}
+  .start-card img{display:block;width:100%;height:auto}
+  .start-cta{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;background:var(--primary);color:#fff;border:none;border-radius:26px;padding:14px 22px;font-weight:800;box-shadow:0 8px 24px rgba(255,122,162,.35)}
 
-/* NAME */
-.name-wrap{height:100%;display:grid;place-items:center;padding:18px}
-.card{width:92%;background:rgba(255,255,255,.78);backdrop-filter:blur(12px);border-radius:20px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
-.name-top{display:flex;gap:12px;align-items:center}
-.protag{width:72px;height:72px;border-radius:50%;border:3px solid #fff;background:#fbe9ef center/cover no-repeat}
-.protag.has-img{background-image:url('assets/protagonist.png')}
-.input{display:flex;gap:8px;margin-top:10px}
-.input input{flex:1;font-size:16px;padding:12px 14px;border-radius:12px;border:1px solid #e5e7eb}
+  /* Modal name */
+  .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.35);z-index:20}
+  .modal .card{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:20px;max-width:360px;width:calc(100% - 32px)}
+  .modal label{display:block;margin:0 0 8px;font-weight:800}
+  .modal input{width:100%;padding:12px;border-radius:12px;border:1px solid #e2e8f0;font-size:16px}
+  .modal .row{display:flex;gap:12px;justify-content:flex-end;margin-top:14px}
+  .btn{border:none;border-radius:14px;padding:10px 16px;font-weight:700}
+  .btn.primary{background:var(--primary);color:#fff}
+  .btn.ghost{background:#f1f5f9;color:#0f172a}
 
-/* HOME */
-.home{height:100%;padding:16px;display:flex;flex-direction:column;gap:16px}
-.dock{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.app{background:#fff;border-radius:18px;padding:14px 10px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.08)}
-.app .ico{width:52px;height:52px;margin:0 auto 8px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900}
-.app span{font-weight:800}
-.noti{background:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 6px 14px rgba(0,0,0,.06);display:none}
+  /* Home */
+  .home{min-height:calc(100dvh - 54px);background:var(--wall, #f9e7ef) center/cover no-repeat;position:relative}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .app{background:#fff;border:none;border-radius:18px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .app .ico{font-size:28px}
+  .app .lbl{font-weight:800}
+  .badge{position:absolute;right:-2px;top:-2px;background:#ef4444;color:#fff;border-radius:999px;font-size:12px;padding:2px 6px;font-weight:800}
 
-/* LIST */
-.list{height:100%;padding:10px 12px;display:flex;flex-direction:column;gap:12px}
-.thread{display:flex;gap:12px;align-items:center;background:#fff;border-radius:18px;padding:12px;box-shadow:0 6px 14px rgba(0,0,0,.06)}
-.thread.locked{opacity:.55;pointer-events:none}
-.ava{width:46px;height:46px;border-radius:50%;flex:none;background:#eee}
-.meta{flex:1}.name{font-weight:900}.sub{font-size:14px;color:#6b7280}
+  /* Notif bar */
+  .notif{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(255,255,255,.9);backdrop-filter: blur(6px);border-radius:16px;padding:10px 12px;box-shadow:var(--shadow);display:none}
+  .notif strong{font-weight:800}
 
-/* CHAT */
-.chat{height:100%;display:flex;flex-direction:column}
-.chat-head{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px)}
-.back{border:0;background:#111827;color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer}
-.peer{display:flex;align-items:center;gap:10px;font-weight:900}
-.chat-body{flex:1;overflow:auto;padding:12px}
-.msg{max-width:85%;background:#fff;padding:12px 14px;border-radius:16px;margin:6px 0;box-shadow:0 4px 10px rgba(0,0,0,.06)}
-.me{margin-left:auto;background:linear-gradient(90deg,#675bff,#4f46e5);color:#fff}
-.choice-wrap{padding:12px;display:flex;flex-direction:column;gap:10px}
-.choice{border:0;border-radius:18px;padding:12px 14px;background:linear-gradient(90deg,var(--pink),var(--pink2));color:#fff;font-weight:900;cursor:pointer}
-.endnote{padding:16px;text-align:center;color:#334155;font-weight:800}
-.hidden{display:none}
-.small{font-size:12px;color:#6b7280}
-.toast{position:absolute;left:16px;right:16px;bottom:20px;background:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 10px 20px rgba(0,0,0,.15);display:none}
-.toast.show{display:block}
+  /* Messages list */
+  .tile{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:14px;display:flex;gap:12px;align-items:center}
+  .list{display:flex;flex-direction:column;gap:12px}
+  .avatar{width:44px;height:44px;border-radius:999px;display:inline-block;flex:0 0 44px;background:#e2e8f0;position:relative;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .title{font-weight:900}
+  .muted{color:#64748b}
+
+  /* Chat */
+  .chat{display:flex;flex-direction:column;gap:10px}
+  .bubble{max-width:82%;padding:12px 14px;border-radius:16px;box-shadow:var(--shadow);background:#fff}
+  .bubble.me{align-self:flex-end;background:linear-gradient(45deg,var(--primary),var(--primary-2));color:#fff}
+  .choices{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  .choice{border:none;border-radius:999px;padding:12px 16px;background:var(--primary);color:#fff;font-weight:800;box-shadow:0 8px 24px rgba(255,122,162,.35)}
+  .next{align-self:flex-end;border:none;border-radius:999px;padding:10px 16px;background:#0ea5e9;color:#fff;font-weight:800}
+
+  /* header wewn. ekranów */
+  .bar{display:flex;align-items:center;gap:10px;margin:8px 0 14px}
+  .bar button{border:none;background:#f1f5f9;border-radius:10px;padding:8px 10px}
+  .bar h2{margin:0;font-weight:900}
 </style>
 </head>
 <body>
-<div id="root">
-  <div class="phone">
-    <div class="status"><span id="clock">12:00</span></div>
+  <div class="phone" id="phoneRoot">
+    <div class="status">Heartline</div>
 
-    <!-- START -->
-    <section class="screen start" id="scrStart">
-      <div class="logo">Heartline</div>
-      <div class="hero" id="hero"></div>
-      <div class="row">
-        <button class="btn" id="btnStart">Start</button>
-        <button class="btn secondary" id="btnReset">Reset</button>
+    <!-- ===== START ===== -->
+    <section class="screen" id="scrStart">
+      <div class="start-card" id="startCard">
+        <img id="startImg" alt="Heartline" />
+        <button class="start-cta" id="btnStart">Start 💬</button>
       </div>
-      <div class="small">Foundation build</div>
     </section>
 
-    <!-- NAME -->
-    <section class="screen name-wrap hidden" id="scrName">
+    <!-- ===== HOME (telefon) ===== -->
+    <section class="screen home" id="scrHome" style="display:none">
+      <div class="wrap">
+        <div class="grid">
+          <button class="app" data-open="messages">
+            <div class="ico">💬</div>
+            <div class="lbl">Messages</div>
+            <span class="badge" id="badgeMessages" style="display:none">1</span>
+          </button>
+          <button class="app"><div class="ico">📞</div><div class="lbl">Phone</div></button>
+          <button class="app"><div class="ico">🖼️</div><div class="lbl">Gallery</div></button>
+          <button class="app"><div class="ico">⏰</div><div class="lbl">Clock</div></button>
+          <button class="app"><div class="ico">📝</div><div class="lbl">Notes</div></button>
+          <button class="app" data-open="settings"><div class="ico">⚙️</div><div class="lbl">Settings</div></button>
+        </div>
+      </div>
+      <div class="notif" id="homeNotif"></div>
+    </section>
+
+    <!-- ===== MESSAGES LIST ===== -->
+    <section class="screen" id="scrMessages" style="display:none">
+      <div class="wrap">
+        <div class="bar">
+          <button data-back="home">←</button>
+          <h2>Messages</h2>
+        </div>
+        <div class="list" id="threads"></div>
+      </div>
+    </section>
+
+    <!-- ===== CHAT ===== -->
+    <section class="screen" id="scrChat" style="display:none">
+      <div class="wrap">
+        <div class="bar">
+          <button data-back="messages">←</button>
+          <h2 id="chatTitle">Chat</h2>
+        </div>
+        <div class="chat" id="chatList"></div>
+      </div>
+    </section>
+
+    <!-- ===== MODAL NAME ===== -->
+    <div class="modal" id="nameModal">
       <div class="card">
-        <div class="name-top">
-          <div class="protag" id="protag"></div>
-          <div>
-            <h2>Enter your name</h2>
-            <div class="small">It will appear in dialogues.</div>
-          </div>
-        </div>
-        <div class="input">
-          <input id="nameInput" maxlength="16" placeholder="Your name"/>
-          <button class="btn" id="nameOk">OK</button>
+        <label for="nameInput">Enter your name</label>
+        <input id="nameInput" placeholder="Type your name…" />
+        <div class="row">
+          <button class="btn ghost" id="nameCancel" style="display:none">Cancel</button>
+          <button class="btn primary" id="nameOk">OK</button>
         </div>
       </div>
-    </section>
-
-    <!-- HOME -->
-    <section class="screen home hidden" id="scrHome">
-      <div class="dock" id="dock">
-        <div class="app" data-open="messages"><div class="ico" style="background:#ff5fa2">💬</div><span>Messages</span></div>
-        <div class="app"><div class="ico" style="background:#22c55e">📞</div><span>Phone</span></div>
-        <div class="app"><div class="ico" style="background:#60a5fa">🖼️</div><span>Gallery</span></div>
-        <div class="app"><div class="ico" style="background:#f97316">⏰</div><span>Clock</span></div>
-        <div class="app"><div class="ico" style="background:#38bdf8">📝</div><span>Notes</span></div>
-        <div class="app" data-open="settings"><div class="ico" style="background:#a78bfa">⚙️</div><span>Settings</span></div>
-      </div>
-      <div class="noti" id="homeNoti">New message</div>
-      <div class="noti" id="chapterNoti">Chapter 2 available</div>
-      <div class="toast" id="toast">No story loaded. Add <code>story/ch1.js</code>.</div>
-    </section>
-
-    <!-- MESSAGES -->
-    <section class="screen list hidden" id="scrList"></section>
-
-    <!-- CHAT -->
-    <section class="screen chat hidden" id="scrChat">
-      <div class="chat-head">
-        <button class="back" id="chatBack">Back</button>
-        <div class="peer"><div class="ava" id="chatAva" style="background:#fca5a5"></div><div id="chatName">Chat</div></div>
-      </div>
-      <div class="chat-body" id="chatBody"></div>
-      <div class="choice-wrap hidden" id="choices"></div>
-    </section>
+    </div>
   </div>
-</div>
 
 <script>
-/* ===== CLOCK ===== */
-const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
-const tick=()=>$('#clock').textContent=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-tick(); setInterval(tick,30_000);
-
-/* ===== STATE ===== */
-const LS='heartline_foundation_state';
-const newState=()=>({
-  playerName:'',
-  chapter:1,
-  flags:{},
-  unlocked:{},
-  queue:[],
-  threads:{}, // id: {id,name,color,locked,last,msgs:[]}
-});
-let ST = JSON.parse(localStorage.getItem(LS)||'null') || newState();
-const save=()=>localStorage.setItem(LS, JSON.stringify(ST));
-
-/* ===== CONTACTS (UI definicja) ===== */
-const CONTACTS=[
-  {id:'maya',name:'Maya',color:'#fca5a5'},
-  {id:'riven',name:'Riven',color:'#93c5fd'},
-  {id:'noah',name:'Noah',color:'#86efac'},
-  {id:'victor',name:'Victor',color:'#c7d2fe'},
-];
-function ensureThreads(){
-  CONTACTS.forEach(c=>{
-    ST.threads[c.id] ||= {id:c.id,name:c.name,color:c.color,locked:true,last:'Locked',msgs:[]};
-  });
-}
-
-/* ===== NAV ===== */
-const scrStart=$('#scrStart'), scrName=$('#scrName'), scrHome=$('#scrHome'), scrList=$('#scrList'), scrChat=$('#scrChat');
-const show=el=>[scrStart,scrName,scrHome,scrList,scrChat].forEach(s=>s.classList.toggle('hidden',s!==el));
-
-$('#btnStart').onclick=()=>show(ST.playerName?scrHome:scrName);
-$('#btnReset').onclick=()=>{ localStorage.removeItem(LS); ST=newState(); ensureThreads(); paintHome(); show(scrStart); };
-
-$('#nameOk').onclick=()=>{
-  ST.playerName=($('#nameInput').value.trim()||'You'); save();
-  callStory('boot'); // fabuła może np. odblokować Mayę i wysłać notyfikację
-  paintHome(); show(scrHome);
+/* ================= ASSETS – podmień na swoje pliki ================= */
+const ASSETS = {
+  START_IMAGE: 'assets/heartline-start.jpg', // obraz ekranu startowego
+  WALLPAPER:   'assets/sakura-blur.jpg',     // tapeta telefonu
+  AVATARS: {                                // możesz dodać swoje okrągłe ikony
+    maya:   'assets/ava_maya.png',
+    riven:  'assets/ava_riven.png',
+    noah:   'assets/ava_noah.png',
+    victor: 'assets/ava_victor.png'
+  }
 };
+/* ================ STAN ================ */
+const ST = JSON.parse(localStorage.getItem('HL_STATE')||'{}');
+if(!ST.playerName) ST.playerName='';
+if(!ST.contacts) ST.contacts={
+  maya:{ id:'maya', name:'Maya',   avatar:ASSETS.AVATARS.maya,   unlocked:true,  preview:'' },
+  riven:{id:'riven',name:'Riven',  avatar:ASSETS.AVATARS.riven,  unlocked:false, preview:'Locked' },
+  noah:{ id:'noah', name:'Noah',   avatar:ASSETS.AVATARS.noah,   unlocked:false, preview:'Locked' },
+  victor:{id:'victor',name:'Victor',avatar:ASSETS.AVATARS.victor,unlocked:false, preview:'Locked' }
+};
+if(!ST.threads) ST.threads={  // historia czatów
+  maya:[],
+  riven:[],
+  noah:[],
+  victor:[]
+};
+if(!ST.unread) ST.unread={};
+save();
 
-/* ===== HOME ===== */
-function paintHome(){
-  try{ fetch('assets/start-cover.jpg',{method:'HEAD'}).then(r=>{ if(r.ok) $('#hero').classList.add('has-img'); }); }catch(e){}
-  try{ fetch('assets/protagonist.png',{method:'HEAD'}).then(r=>{ if(r.ok) $('#protag').classList.add('has-img'); }); }catch(e){}
-  try{ fetch('assets/sakura-closeup.jpg',{method:'HEAD'}).then(r=>{ if(r.ok){ scrHome.style.background=`linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.9)), url('assets/sakura-closeup.jpg') center/cover no-repeat`; } }); }catch(e){}
-  $('#homeNoti').style.display = ST.queue.length ? 'block':'none';
-  $('#homeNoti').textContent = ST.queue.length ? `New message from ${cap(ST.queue[0].contact)}` : 'No new messages';
-  $('#chapterNoti').style.display = ST.chapter>=2 ? 'block':'none';
-  if(!window.HeartlineStory){ const t=$('#toast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2200); }
+/* ================ POMOCNICZE ================ */
+function qs(s,root=document){return root.querySelector(s)}
+function qsa(s,root=document){return [...root.querySelectorAll(s)]}
+function save(){ localStorage.setItem('HL_STATE', JSON.stringify(ST)); }
+function clearUnread(id){ delete ST.unread[id]; save(); renderBadges(); }
+function renderBadges(){
+  const n = Object.keys(ST.unread).length;
+  qs('#badgeMessages').style.display = n? 'inline-block':'none';
 }
-$('#dock').addEventListener('click',e=>{
-  const app=e.target.closest('.app'); if(!app) return;
-  const to=app.dataset.open;
-  if(to==='messages'){ renderThreads(); show(scrList); }
-  if(to==='settings'){ alert('Settings (placeholder) — Foundation'); }
-});
-$('#homeNoti').onclick=()=>{ renderThreads(); show(scrList); };
 
-/* ===== LISTA WĄTKÓW ===== */
+/* ================ EKRANY ================ */
+const scrStart = qs('#scrStart');
+const scrHome  = qs('#scrHome');
+const scrMessages = qs('#scrMessages');
+const scrChat = qs('#scrChat');
+const chatList = qs('#chatList');
+const chatTitle = qs('#chatTitle');
+
+function show(screen){
+  [scrStart,scrHome,scrMessages,scrChat].forEach(s=>s.style.display='none');
+  screen.style.display='block';
+  if(screen===scrHome) renderHome();
+  if(screen===scrMessages) renderThreads();
+}
+
+function renderHome(){
+  // tapeta
+  scrHome.style.setProperty('--wall', `url("${ASSETS.WALLPAPER}")`);
+  // powiadomienie (jeśli są nieprzeczytane)
+  const notif = qs('#homeNotif');
+  const unreadIds = Object.keys(ST.unread);
+  if(unreadIds.length){
+    const id = unreadIds[0];
+    notif.innerHTML = `<strong>New message from ${ST.contacts[id].name}</strong> 💬`;
+    notif.style.display='block';
+    notif.onclick=()=>{ show(scrMessages); };
+  } else {
+    notif.style.display='none';
+  }
+}
+
 function renderThreads(){
-  ensureThreads(); save();
-  scrList.innerHTML='';
-  const top=document.createElement('div'); top.className='chat-head';
-  top.innerHTML=`<button class="back" id="toHome">Back</button><b>Messages</b>`;
-  scrList.appendChild(top); $('#toHome').onclick=()=>show(scrHome);
+  const box = qs('#threads');
+  box.innerHTML='';
+  for(const id of ['maya','riven','noah','victor']){
+    const c = ST.contacts[id];
+    const last = ST.threads[id].length ? ST.threads[id][ST.threads[id].length-1].text : (c.preview||'');
+    const tile = document.createElement('button');
+    tile.className='tile';
+    tile.style.width='100%';
+    tile.style.textAlign='left';
+    tile.disabled = !c.unlocked;
+    tile.dataset.openThread = id;
 
-  CONTACTS.forEach(c=>{
-    const T=ST.threads[c.id];
-    const row=document.createElement('div'); row.className='thread'+(T.locked?' locked':''); row.dataset.id=c.id;
-    row.innerHTML=`<div class="ava" style="background:${T.color}"></div>
-      <div class="meta"><div class="name">${T.name}</div>
-      <div class="sub">${T.last || (T.locked?'Locked':'')}</div></div>`;
-    row.onclick=()=>openChat(c.id);
-    scrList.appendChild(row);
-  });
+    const av = document.createElement('span'); av.className='avatar';
+    if(c.avatar) av.innerHTML = `<img src="${c.avatar}" alt="${c.name}">`;
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<div class="title">${c.name}</div><div class="muted">${last||''}</div>`;
 
-  // wejście do listy czyści badge/toast
-  ST.queue=[]; save(); paintHome();
-}
-
-/* ===== CZAT — SILNIK ===== */
-const CHAT=$('#chatBody'), CHO=$('#choices');
-let current=null;
-
-function openChat(id){
-  ensureThreads(); current=id;
-  const T=ST.threads[id];
-  $('#chatName').textContent=T.name;
-  $('#chatAva').style.background=T.color;
-  CHAT.innerHTML=''; CHO.classList.add('hidden'); show(scrChat);
-  $('#chatBack').onclick=()=>{ renderThreads(); show(scrList); };
-
-  // odtwórz historię
-  T.msgs.forEach(m=>appendMsg(m.from,m.text,m.me));
-
-  // poproś fabułę o sekwencję do odtworzenia (jeśli jest)
-  if(window.HeartlineStory){
-    const seq = callStory('getScript', id) || [];
-    if(seq.length) runSequence(seq);
-  }else{
-    appendMsg('System','No story loaded. Add script in story/ch1.js.');
+    tile.append(av,wrap);
+    if(ST.unread[id]){ const b=document.createElement('span'); b.className='badge'; b.textContent='1'; b.style.position='static'; b.style.marginLeft='auto'; tile.append(b); }
+    box.append(tile);
   }
 }
 
-function appendMsg(from,text,me=false){
-  const el=document.createElement('div'); el.className='msg'+(me?' me':'');
-  el.textContent = (me || from==='You') ? text : `${cap(from)}: ${text}`;
-  CHAT.appendChild(el); CHAT.scrollTop=CHAT.scrollHeight;
-  if(current){
-    const T=ST.threads[current];
-    T.msgs.push({from:me?'You':from,text,me});
-    T.last=text; save();
+/* ================ CHAT ================ */
+let currentThread = null;
+
+function openThread(id){
+  currentThread = id;
+  clearUnread(id);
+  chatTitle.textContent = ST.contacts[id].name;
+  renderChat();
+  show(scrChat);
+}
+function renderChat(){
+  chatList.innerHTML='';
+  const items = ST.threads[currentThread];
+  for(const it of items){
+    const b = document.createElement('div');
+    b.className = 'bubble ' + (it.from==='me' ? 'me' : '');
+    b.textContent = it.text;
+    chatList.append(b);
   }
 }
-
-function showChoices(items){
-  CHO.innerHTML=''; items.forEach(ch=>{
-    const b=document.createElement('button'); b.className='choice'; b.textContent=ch.text;
-    b.onclick=()=>{ CHO.classList.add('hidden'); appendMsg('You', ch.text, true); if(ch.then) runSequence(ch.then); if(ch.sys) handleSystem(ch.sys,ch.payload); };
-    CHO.appendChild(b);
-  });
-  CHO.classList.remove('hidden');
+function pushMsg(id, from, text){
+  ST.threads[id].push({from, text});
+  save();
+  if(currentThread===id) renderChat(); else ST.unread[id]=true, save(), renderBadges();
 }
 
-function runSequence(seq){
-  let i=0;
-  const step=()=>{
-    if(i>=seq.length) return;
-    const node=seq[i++];
-    if(node.from){ appendMsg(node.from, interpolate(node.text)); return step(); }
-    if(node.choice){ showChoices(node.choice); return; }
-    if(node.sys){ handleSystem(node.sys, node.payload); return step(); }
+/* ================ LOGIKA STARTU ================ */
+function boot(){
+  // obrazek startu
+  const img = qs('#startImg');
+  img.src = ASSETS.START_IMAGE;
+  // przyciski
+  qs('#btnStart').onclick = ()=> askName();
+  // Back/otwieranie ekranów
+  qsa('[data-back]').forEach(b=>b.onclick=()=>show(b.dataset.back==='home'?scrHome:scrMessages));
+  qsa('[data-open]').forEach(b=>{
+    if(b.dataset.open==='messages') b.onclick=()=>show(scrMessages);
+    if(b.dataset.open==='settings') b.onclick=()=>alert('Settings (coming soon)');
+  });
+  // klik tile → chat
+  qs('#threads').addEventListener('click',e=>{
+    const btn = e.target.closest('[data-open-thread]');
+    if(!btn) return;
+    const id = btn.dataset.openThread;
+    if(ST.contacts[id].unlocked) openThread(id);
+  });
+
+  // jeśli nie ma imienia → poproś i dopiero pokaż home
+  if(!ST.playerName){ show(scrStart); }
+  else { show(scrHome); scheduleIntro(); }
+}
+function askName(){
+  const modal = qs('#nameModal');
+  modal.style.display='flex';
+  const inp = qs('#nameInput');
+  inp.value = ST.playerName||'';
+  inp.focus();
+  const ok = qs('#nameOk');
+  ok.onclick = ()=>{
+    const v = inp.value.trim()||'You';
+    ST.playerName = v; save();
+    modal.style.display='none';
+    show(scrHome);
+    scheduleIntro(); // uruchom scenę 1
   };
-  step();
 }
 
-function handleSystem(cmd, payload){
-  if(cmd==='unlock'){ const id=payload; if(ST.threads[id]){ ST.threads[id].locked=false; ST.threads[id].last='Tap to open'; save(); } }
-  if(cmd==='notify'){ ST.queue.push({contact:payload.contact, preview:payload.preview}); save(); paintHome(); }
-  if(cmd==='chapter'){ ST.chapter = payload; save(); paintHome(); }
-  callStory('onSystem', cmd, payload); // opcjonalny callback fabuły
+/* ================ SCENA 1: Maya → Riven → Maya (szkielet) ================ */
+function scheduleIntro(){
+  // jeśli już odpalone wcześniej — nic nie rób
+  if(ST._introDone) return;
+  ST._introDone = true; save();
+
+  // 1) po krótkiej pauzie przychodzi Maya
+  setTimeout(()=>{
+    ST.contacts.maya.preview = "Hey! Guess who texted me just now? 👀";
+    pushMsg('maya','maya',`Hey ${ST.playerName}! Guess who texted me last night? 👀`);
+  }, 700);
+
+  // 2) po wejściu do Mai są 3 odpowiedzi → pokażemy sekwencyjnie
+  // (Tu tylko fundament – wybory dokładamy później w pliku story)
 }
 
-function interpolate(t){ return (t||'').replaceAll('{name}', ST.playerName||'You'); }
-function cap(s){ return s? s.charAt(0).toUpperCase()+s.slice(1):''; }
+/* ====== Init ====== */
+boot();
 
-/* ===== API dla plików fabuły ===== */
-const HeartlineAPI = {
-  state: ()=>ST,
-  save: ()=>save(),
-  unlock: (contactId)=>handleSystem('unlock', contactId),
-  notify: (contact, preview)=>handleSystem('notify', {contact,preview}),
-  chapter: (n)=>handleSystem('chapter', n),
-  append: (contact, from, text, me=false)=>{ const keep=current; current=contact; appendMsg(from,text,me); current=keep; },
+/* ====== DEBUG pomoc ====== */
+window.HL = {
+  reset(){ localStorage.removeItem('HL_STATE'); location.reload(); },
+  notify(id='maya', text='Ping!'){ ST.contacts[id].preview=text; pushMsg(id,id,text); }
 };
-window.HeartlineAPI = HeartlineAPI;
-function callStory(fn, ...args){
-  if(!window.HeartlineStory) return null;
-  const f=window.HeartlineStory[fn];
-  if(typeof f==='function') return f(HeartlineAPI, ...args);
-  return null;
-}
-
-/* ===== BOOT ===== */
-(function boot(){
-  ensureThreads(); save();
-  if(!ST.playerName){ show(scrStart); } else { paintHome(); show(scrHome); }
-})();
 </script>
-
-<!-- HOME / telefon -->
-<section id="homeScreen" data-screen="home" style="position:relative;min-height:100vh;background:var(--wall, #f8e9ef);background-image:var(--wall-url);background-size:cover;background-position:center;">
-  <!-- Ikony (ważne: data-app="messages") -->
-  <div style="padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:560px;margin:0 auto;">
-    <button data-app="messages" style="position:relative;border:none;border-radius:18px;background:#ffd0df;padding:18px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);">
-      💬<div>Messages</div>
-    </button>
-    <button style="border:none;border-radius:18px;background:#bff0c7;padding:18px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);">📞<div>Phone</div></button>
-    <button style="border:none;border-radius:18px;background:#cfe1ff;padding:18px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);">🖼️<div>Gallery</div></button>
-    <button style="border:none;border-radius:18px;background:#ffd4a9;padding:18px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);">⏰<div>Clock</div></button>
-    <button style="border:none;border-radius:18px;background:#bfe2ff;padding:18px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);">📝<div>Notes</div></button>
-    <button style="border:none;border-radius:18px;background:#cdb9ff;padding:18px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);">⚙️<div>Settings</div></button>
-  </div>
-
-  <!-- Pasek powiadomienia (skrypt utworzy jeśli go brak) -->
-  <div id="notif" data-role="notif" style="display:none"></div>
-</section>
-
-<!-- LISTA WIADOMOŚCI -->
-<section id="messagesScreen" style="display:none;min-height:100vh;padding:18px;max-width:560px;margin:0 auto;">
-  <h2 style="margin:6px 0 12px;font-weight:800">Messages</h2>
-  <div id="threadsList"></div>
-</section>
-
-<!-- WIDOK CHATU -->
-<section id="chatScreen" style="display:none;min-height:100vh;padding:18px;max-width:560px;margin:0 auto;display:flex;flex-direction:column;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <button onclick="document.getElementById('chatScreen').style.display='none';document.getElementById('messagesScreen').style.display='block';">←</button>
-    <h2 data-chat-title style="margin:0;font-weight:800">Chat</h2>
-  </div>
-  <div data-chat-list style="display:flex;flex-direction:column;"></div>
-</section>
-
-<!-- 🔗 Później dodasz fabułę -->
-<script src="story/ch1.js"defer></script>
-
 </body>
 </html>
-
